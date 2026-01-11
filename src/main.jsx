@@ -1,19 +1,27 @@
-import React from 'react'
-import { createRoot } from 'react-dom/client'
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import HomePage from './pages/HomePage.jsx'
-import NewPage from './pages/NewPage.jsx'
-import ErrorPage from './pages/ErrorPage.jsx'
-import './index.css'
+import { createRoot } from 'react-dom/client';
+import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
+import { CartProvider } from './context/CartContext';
+import React from 'react';
+import ShoppingPage from './pages/ShoppingPage';
+import CheckoutPage from './pages/CheckoutPage';
+import OrdersPage from './pages/OrdersPage';
+import './index.css';
+import Header from './components/Header';
 
-const root = document.getElementById("root");
+const App = () => {
+  return (
+    <CartProvider>
+      <BrowserRouter>
+     <Header/>
 
-createRoot(root).render(
-  <BrowserRouter>
-    <Routes>
-      <Route path="/" element={<HomePage />} />
-      <Route path="/new" element={<NewPage />} />
-      <Route path="/*" element={<ErrorPage />} />
-    </Routes>
-  </BrowserRouter>
-);
+        <Routes>
+          <Route path="/" element={<ShoppingPage />} />
+          <Route path="/checkout" element={<CheckoutPage />} />
+          <Route path="/orders" element={<OrdersPage />} />
+        </Routes>
+      </BrowserRouter>
+    </CartProvider>
+  );
+};
+
+createRoot(document.getElementById('root')).render(<App />);
